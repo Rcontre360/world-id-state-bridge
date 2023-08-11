@@ -3,10 +3,10 @@ import readline from "readline";
 
 import dotenv from "dotenv";
 import ora from "ora";
-import { Command } from "commander";
-import { execSync } from "child_process";
-import { Network, Alchemy, Utils } from "alchemy-sdk";
-import { ethers } from "ethers";
+import {Command} from "commander";
+import {execSync} from "child_process";
+import {Network, Alchemy, Utils} from "alchemy-sdk";
+import {ethers} from "ethers";
 
 // === Constants ==================================================================================
 
@@ -172,7 +172,8 @@ async function getPolygonscanApiKey(config) {
 
 async function getTreeDepth(config) {
   if (!config.treeDepth) {
-    config.treeDepth = await ask("Enter WorldID tree depth: ");
+    //config.treeDepth = await ask("Enter WorldID tree depth: ");
+    config.treeDepth = 30;
   }
 }
 
@@ -343,7 +344,7 @@ async function saveConfiguration(config) {
     }
   })();
 
-  const data = JSON.stringify({ ...oldData, ...config });
+  const data = JSON.stringify({...oldData, ...config});
   fs.writeFileSync(CONFIG_FILENAME, data);
 }
 
@@ -429,7 +430,7 @@ async function deployOptimismWorldID(config) {
   try {
     const data = execSync(
       `forge script src/script/deploy/DeployOpWorldID.s.sol:DeployOpWorldID --fork-url ${config.optimismRpcUrl} \
-      --etherscan-api-key ${config.optimismEtherscanApiKey} --broadcast --verify -vvvv`,
+       --broadcast --verify -vvvv`,
     );
     console.log(data.toString());
   } catch (err) {
@@ -571,28 +572,25 @@ async function deploymentMainnet(config) {
   dotenv.config();
 
   await getPrivateKey(config);
-  await getEthereumRpcUrl(config);
+  //await getEthereumRpcUrl(config);
   await getOptimismRpcUrl(config);
-  await getBaseRpcUrl(config);
-  await getPolygonRpcUrl(config);
-  await getEthereumEtherscanApiKey(config);
-  await getOptimismEtherscanApiKey(config);
-  await getBaseEtherscanApiKey(config);
-  await getPolygonscanApiKey(config);
+  //await getBaseRpcUrl(config);
+  //await getPolygonRpcUrl(config);
+  //await getEthereumEtherscanApiKey(config);
+  //await getOptimismEtherscanApiKey(config);
+  //await getBaseEtherscanApiKey(config);
+  //await getPolygonscanApiKey(config);
   await getTreeDepth(config);
   await saveConfiguration(config);
   await deployOptimismWorldID(config);
-  await deployBaseWorldID(config);
-  await deployPolygonWorldIDMainnet(config);
-  await getWorldIDIdentityManagerAddress(config);
-  await getOptimismWorldIDAddress(config);
-  await getBaseWorldIDAddress(config);
-  await getPolygonWorldIDAddress(config);
+  //await deployBaseWorldID(config);
+  //await deployPolygonWorldIDMainnet(config);
+  //await getWorldIDIdentityManagerAddress(config);
+  //await getOptimismWorldIDAddress(config);
+  //await getBaseWorldIDAddress(config);
+  //await getPolygonWorldIDAddress(config);
+  //await saveConfiguration(config);
   await saveConfiguration(config);
-  await deployStateBridgeMainnet(config);
-  await getStateBridgeAddress(config);
-  await saveConfiguration(config);
-  await initializePolygonWorldID(config);
   // await transferOwnershipOfOpWorldIDMainnet(config);
 }
 
